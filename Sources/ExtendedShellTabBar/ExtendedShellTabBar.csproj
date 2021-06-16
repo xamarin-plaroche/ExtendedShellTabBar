@@ -54,6 +54,9 @@
     <None Include="license\license.txt" Pack="true" PackagePath="" />
     <None Include="images\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
+    <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
   </ItemGroup>

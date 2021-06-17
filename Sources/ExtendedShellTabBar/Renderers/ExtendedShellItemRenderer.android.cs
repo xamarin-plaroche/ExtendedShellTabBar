@@ -28,41 +28,28 @@ namespace ExtendedShellTabBar.Renderers
             _context = shellContext;
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            _outerLayout = base.OnCreateView(inflater, container, savedInstanceState);
-            _bottomView = _outerLayout.FindViewById<BottomNavigationView>(Resource.Id.bottomtab_tabbar);
-
-            _mainLayout = new FrameLayout(Context);
-
-            var lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MatchParent, FrameLayout.LayoutParams.MatchParent);
-            _mainLayout.LayoutParameters = lp;
-
-            _mainLayout.AddView(_outerLayout);
+            base.OnViewCreated(view, savedInstanceState);
+            _bottomView = view.FindViewById<BottomNavigationView>(Resource.Id.bottomtab_tabbar);
 
             if (ShellItem != null && ShellItem is VisualElements.ExtendedShellTabBar)
-                {
+            {
                 var tabbar = (VisualElements.ExtendedShellTabBar)ShellItem;
 
                 var centeredTab = tabbar.CenteredTab;
 
                 if (centeredTab != null && centeredTab.Icon != null)
                 {
-
                     SetupLargeTab();
                 }
             }
-
-            _mainLayout.ForceLayout();
-
-            return _mainLayout;
         }
 
         private async void SetupLargeTab()
         {
             if (ShellItem != null)
             {
-
                 var centeredLayout = new FrameLayout(Context);
 
                 var tabbar = (VisualElements.ExtendedShellTabBar)ShellItem;
@@ -91,21 +78,22 @@ namespace ExtendedShellTabBar.Renderers
 
                 button.Click += Image_Click;
 
+                _bottomView.Measure((int)MeasureSpecMode.Unspecified, (int)MeasureSpecMode.Unspecified);
+
                 var flp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WrapContent, FrameLayout.LayoutParams.WrapContent, GravityFlags.CenterHorizontal | GravityFlags.Bottom);
                 flp.BottomMargin = _bottomView.MeasuredHeight / 2;
 
                 centeredLayout.LayoutParameters = flp;
 
-                _mainLayout.AddView(centeredLayout);
+                _bottomView.AddView(centeredLayout);
 
-                _mainLayout.ForceLayout();
+                _bottomView.ForceLayout();
 
             }
         }
 
         private void Image_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Click !");
             if (ShellItem != null)
             {
                 var tabbar = (VisualElements.ExtendedShellTabBar)ShellItem;

@@ -10,11 +10,12 @@
     <DebugType>portable</DebugType>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>latestmajor</LangVersion>
-    <ReleaseVersion>1.0</ReleaseVersion>
     <Title>ExtendedShellTabBar</Title>
     <PackageProjectUrl>https://github.com/xamarin-plaroche/ExtendedShellTabBar</PackageProjectUrl>
     <Owners>Paulin Laroche</Owners>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <PackageIconUrl>images\icon.png</PackageIconUrl>
+    <PackageVersion>1.0.2</PackageVersion>
  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
     <DebugType>full</DebugType>

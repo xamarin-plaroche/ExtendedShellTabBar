@@ -15,7 +15,7 @@
     <Owners>Paulin Laroche</Owners>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageIconUrl>images\icon.png</PackageIconUrl>
-    <PackageVersion>1.0.2</PackageVersion>
+    <PackageVersion>1.0.3</PackageVersion>
  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
     <DebugType>full</DebugType>

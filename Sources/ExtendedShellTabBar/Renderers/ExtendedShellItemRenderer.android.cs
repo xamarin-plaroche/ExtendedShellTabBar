@@ -13,19 +13,12 @@ namespace ExtendedShellTabBar.Renderers
 {
     public class ExtendedShellItemRenderer : ShellItemRenderer
     {
-        IShellContext _context;
-
-        FrameLayout _mainLayout;
-
+        
         FrameLayout _bottomView;
-
-        View _outerLayout;
-
         ExtendedButton button;
 
         public ExtendedShellItemRenderer(IShellContext shellContext) : base(shellContext)
         {
-            _context = shellContext;
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -36,7 +29,6 @@ namespace ExtendedShellTabBar.Renderers
             if (ShellItem != null && ShellItem is VisualElements.ExtendedShellTabBar)
             {
                 var tabbar = (VisualElements.ExtendedShellTabBar)ShellItem;
-
                 var centeredTab = tabbar.CenteredTab;
 
                 if (centeredTab != null && centeredTab.Icon != null)
@@ -55,7 +47,7 @@ namespace ExtendedShellTabBar.Renderers
                 var tabbar = (VisualElements.ExtendedShellTabBar)ShellItem;
                 var centeredTab = tabbar.CenteredTab;
 
-                var bitmap = await centeredTab.Icon.GetNativeImageAsync(this.Context);
+                var bitmap = await centeredTab.Icon.GetNativeImageAsync(this.Context, centeredTab.Width, centeredTab.Height);
 
                 button = new ExtendedButton(Context)
                 {
@@ -71,6 +63,7 @@ namespace ExtendedShellTabBar.Renderers
                 button.StateListAnimator = null;
 
                 var drawable = RoundedBitmapDrawableFactory.Create(Resources, bitmap);
+
                 drawable.CornerRadius = centeredTab.CornerRadius * Resources.DisplayMetrics.Density;
                 button.Background = drawable;
 
@@ -85,9 +78,12 @@ namespace ExtendedShellTabBar.Renderers
 
                 centeredLayout.LayoutParameters = flp;
 
-                _bottomView.AddView(centeredLayout);
+                var parent = (FrameLayout)_bottomView.Parent?.Parent;
+                if (parent == null)
+                    return;
 
-                _bottomView.ForceLayout();
+                parent.AddView(centeredLayout);
+                parent.ForceLayout();
 
             }
         }
